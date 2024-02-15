@@ -140,6 +140,11 @@ public class UserServiceImpl implements UserService {
     return false;
   }
 
+  public Long findUserId(String profileId) {
+    User user = userRepository.findByUserProfileId(profileId).get();
+    return user.getUserId();
+  }
+
 
   // ------------------
   // 사용자 아이디 입력

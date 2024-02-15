@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +19,12 @@ import com.songdiary.SongDiary.user.dto.UserInfoResponse;
 import com.songdiary.SongDiary.user.dto.UserJoinRequest;
 import com.songdiary.SongDiary.user.dto.UserLoginRequest;
 import com.songdiary.SongDiary.user.dto.UserNewPasswordRequest;
+import com.songdiary.SongDiary.user.dto.UserSessionDTO;
 import com.songdiary.SongDiary.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 
 
 @RestController
@@ -45,10 +51,19 @@ public class UserController {
 
   // 로그인
   @PostMapping("login")
-  public ResponseEntity<?> userLogin(@RequestBody UserLoginRequest req) {
+  public ResponseEntity<?> userLogin(@RequestBody UserLoginRequest req, HttpServletRequest sessionReq) {
     try {
       userService.login(req);
-      return new ResponseEntity<>(HttpStatus.OK);
+      Long userId = userService.findUserId(req.getProfileId());
+
+      //세션
+      UserSessionDTO userSessionDTO = new UserSessionDTO();
+      userSessionDTO.setUserId(userId);
+      //userSessionDto.setRoles(Arrays.asList("USER"));
+      HttpSession session = sessionReq.getSession();
+      session.setAttribute("user", userSessionDTO);
+
+      return new ResponseEntity<>(req.getProfileId()+" 님, 환영합니다. 로그인이 완료되었습니다.", HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -56,17 +71,20 @@ public class UserController {
   
   // 로그아웃
   @PostMapping("logout")
-  public ResponseEntity<?> userLogout(@SessionAttribute(name="userId", required=false) Long userId) {
-      //TODO: process POST request
+  public ResponseEntity<?> userLogout(HttpServletRequest req) {
+    HttpSession session = req.getSession(false);
+    if (session != null) {
+      session.invalidate();
+    }
       
-      return new ResponseEntity<>(HttpStatus.OK);
+    return new ResponseEntity<>("로그아웃이 완료되었습니다.", HttpStatus.OK);
   }
   
   // 회원탈퇴
   @DeleteMapping("delete")
-  public ResponseEntity<?> userDelete(/*@SessionAttribute(name="userId", required=false)*/ Long userId) {
-    if (userId != null) {
-      userService.delete(userId);
+  public ResponseEntity<?> userDelete(@SessionAttribute(name="user", required=false) UserSessionDTO user) {
+    if (user.getUserId() != null) {
+      userService.delete(user.getUserId());
       return new ResponseEntity<>("회원탈퇴가 완료되었습니다.", HttpStatus.OK);
     }
     else {
@@ -76,9 +94,9 @@ public class UserController {
 
   // 회원정보 조회
   @GetMapping("info/check")
-  public UserInfoResponse userInfo(/*@SessionAttribute(name="userId", required=false)*/ Long userId) {
-    if (userId != null) {
-      return userService.userInfo(userId);
+  public UserInfoResponse userInfo(@SessionAttribute(name="user", required=false) UserSessionDTO user) {
+    if (user.getUserId() != null) {
+      return userService.userInfo(user.getUserId());
     }
     else {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
@@ -87,10 +105,10 @@ public class UserController {
   
   // 회원정보 수정
   @PostMapping("info/edit-profile")
-  public ResponseEntity<?> userInfoEdit(/*@SessionAttribute(name="userId", required=false)*/ Long userId, @RequestBody UserInfoRequest req) {
-    if (userId != null) {
+  public ResponseEntity<?> userInfoEdit(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserInfoRequest req) {
+    if (user.getUserId() != null) {
       try {
-        userService.editUserInfo(userId, req);
+        userService.editUserInfo(user.getUserId(), req);
         return new ResponseEntity<>("프로필이 업데이트되었습니다.", HttpStatus.OK);
       }
       catch (Exception e) {
@@ -104,10 +122,10 @@ public class UserController {
 
   // 비밀번호 변경
   @PostMapping("info/edit-password")
-  public ResponseEntity<?> postMethodName(/*@SessionAttribute(name="userId", required=false)*/ Long userId, @RequestBody UserNewPasswordRequest req) {
-    if (userId != null) {
+  public ResponseEntity<?> postMethodName(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserNewPasswordRequest req) {
+    if (user.getUserId() != null) {
       try {
-        userService.editPassword(userId, req);
+        userService.editPassword(user.getUserId(), req);
         return new ResponseEntity<>("비밀번호가 변경되었습니다.", HttpStatus.OK);
       }
       catch (Exception e) {
