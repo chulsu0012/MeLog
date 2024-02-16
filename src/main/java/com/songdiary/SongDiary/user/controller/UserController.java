@@ -40,7 +40,11 @@ public class UserController {
 
   // 회원가입
   @PostMapping("join")
-  public ResponseEntity<?> userSignUp(@RequestBody UserJoinRequest req) {
+  public ResponseEntity<?> userSignUp(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserJoinRequest req) {
+    if (user != null) {
+      return new ResponseEntity<>("로그인 상태에서는 사용할 수 없는 기능입니다. 로그아웃 후 시도해주세요.", HttpStatus.FORBIDDEN);
+    }
+
     try {
       User registeredUser = userService.join(req);
       return new ResponseEntity<>(registeredUser.getUserName()+"("+registeredUser.getUserProfileId()+") 님 계정이 생성되었습니다.", HttpStatus.CREATED);
@@ -51,7 +55,11 @@ public class UserController {
 
   // 로그인
   @PostMapping("login")
-  public ResponseEntity<?> userLogin(@RequestBody UserLoginRequest req, HttpServletRequest sessionReq) {
+  public ResponseEntity<?> userLogin(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserLoginRequest req, HttpServletRequest sessionReq) {
+    if (user != null) {
+      return new ResponseEntity<>("로그인 상태에서는 사용할 수 없는 기능입니다. 로그아웃 후 시도해주세요.", HttpStatus.FORBIDDEN);
+    }
+
     try {
       userService.login(req);
       Long userId = userService.findUserId(req.getProfileId());
@@ -75,9 +83,9 @@ public class UserController {
     HttpSession session = req.getSession(false);
     if (session != null) {
       session.invalidate();
+      return new ResponseEntity<>("로그아웃이 완료되었습니다.", HttpStatus.OK);
     }
-      
-    return new ResponseEntity<>("로그아웃이 완료되었습니다.", HttpStatus.OK);
+    return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
   }
   
   // 회원탈퇴
@@ -104,7 +112,7 @@ public class UserController {
   }
   
   // 회원정보 수정
-  @PostMapping("info/edit-profile")
+  @PostMapping("info/edit/profile")
   public ResponseEntity<?> userInfoEdit(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserInfoRequest req) {
     if (user.getUserId() != null) {
       try {
@@ -121,7 +129,7 @@ public class UserController {
   }
 
   // 비밀번호 변경
-  @PostMapping("info/edit-password")
+  @PostMapping("info/edit/password")
   public ResponseEntity<?> postMethodName(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserNewPasswordRequest req) {
     if (user.getUserId() != null) {
       try {
