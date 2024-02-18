@@ -7,7 +7,5 @@ public class UserJoinRequest {
   private String profileId;
   private String password;
   private String passwordCheck;
-  private String email;
   private String name;
-  private String sex;
 }
