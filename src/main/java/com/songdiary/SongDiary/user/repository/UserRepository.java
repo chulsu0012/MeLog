@@ -11,5 +11,4 @@ import com.songdiary.SongDiary.user.domain.User;
 public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByUserId(Long userId);
   Optional<User> findByUserProfileId(String userProfileId);
-  Optional<User> findByUserEmail(String userEmail);
 }

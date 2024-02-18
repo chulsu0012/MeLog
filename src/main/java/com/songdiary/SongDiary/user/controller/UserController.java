@@ -90,8 +90,12 @@ public class UserController {
   
   // 회원탈퇴
   @DeleteMapping("delete")
-  public ResponseEntity<?> userDelete(@SessionAttribute(name="user", required=false) UserSessionDTO user) {
+  public ResponseEntity<?> userDelete(@SessionAttribute(name="user", required=false) UserSessionDTO user, HttpServletRequest req) {
     if (user.getUserId() != null) {
+      HttpSession session = req.getSession(false);
+      if (session != null) {
+        session.invalidate();
+      }
       userService.delete(user.getUserId());
       return new ResponseEntity<>("회원탈퇴가 완료되었습니다.", HttpStatus.OK);
     }
