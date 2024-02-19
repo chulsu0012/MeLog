@@ -7,6 +7,8 @@ import com.songdiary.SongDiary.user.dto.UserJoinRequest;
 import com.songdiary.SongDiary.user.dto.UserLoginRequest;
 import com.songdiary.SongDiary.user.dto.UserNewPasswordRequest;
 
+import java.util.List;
+
 public interface UserService {
 
   public User join(UserJoinRequest req);
@@ -21,4 +23,5 @@ public interface UserService {
   public Boolean validateEmail(String email);
 
   public Long findUserId(String profileId);
+  public List<User> findUsers();
 }

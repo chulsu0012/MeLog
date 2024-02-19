@@ -1,5 +1,6 @@
 package com.songdiary.SongDiary.user.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +144,11 @@ public class UserServiceImpl implements UserService {
   public Long findUserId(String profileId) {
     User user = userRepository.findByUserProfileId(profileId).get();
     return user.getUserId();
+  }
+
+  @Override
+  public List<User> findUsers() {
+    return userRepository.findAll();
   }
 
 

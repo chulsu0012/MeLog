@@ -23,7 +23,7 @@ public class DiaryController {
 
     @GetMapping("/diary/new")
     public String createDiaryForm(Model model){
-        List<User> users = userService.findAllUsers();
+        List<User> users = userService.findUsers();
         model.addAttribute("users", users);
         model.addAttribute("diaryForm", new DiaryForm());
         return "diary/diaryForm";
