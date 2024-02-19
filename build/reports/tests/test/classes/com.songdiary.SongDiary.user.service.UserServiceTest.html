@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">3.113s</div>
+<div class="counter">1.734s</div>
 <p>duration</p>
 </div>
 </td>
@@ -292,7 +292,7 @@ select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user 
 </thead>
 <tr>
 <td class="failures">회원가입()</td>
-<td class="failures">3.113s</td>
+<td class="failures">1.734s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -300,9 +300,9 @@ select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user 
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>00:56:22.974 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.songdiary.SongDiary.user.service.UserServiceTest]: UserServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-00:56:23.441 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.songdiary.SongDiary.SongDiaryApplication for test class com.songdiary.SongDiary.user.service.UserServiceTest
-00:56:24.117 [Test worker] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+<pre>00:58:01.828 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.songdiary.SongDiary.user.service.UserServiceTest]: UserServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:58:02.263 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.songdiary.SongDiary.SongDiaryApplication for test class com.songdiary.SongDiary.user.service.UserServiceTest
+00:58:02.722 [Test worker] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -312,24 +312,24 @@ select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user 
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.2)
 
-2024-02-20T00:56:24.907+09:00  INFO 11132 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Starting UserServiceTest using Java 17.0.9 with PID 11132 (started by 82104 in C:\Users\82104\OneDrive\바탕 화면\study\spring\project\SongDiary_git)
-2024-02-20T00:56:24.912+09:00  INFO 11132 --- [    Test worker] c.s.S.user.service.UserServiceTest       : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-02-20T00:56:27.683+09:00  INFO 11132 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-02-20T00:56:27.877+09:00  INFO 11132 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 167 ms. Found 1 JPA repository interface.
-2024-02-20T00:56:29.362+09:00  INFO 11132 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-02-20T00:56:29.738+09:00  INFO 11132 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/songdiary user=SA
-2024-02-20T00:56:29.753+09:00  INFO 11132 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-02-20T00:56:30.205+09:00  INFO 11132 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-02-20T00:56:30.534+09:00  INFO 11132 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
-2024-02-20T00:56:30.669+09:00  INFO 11132 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-02-20T00:56:31.735+09:00  INFO 11132 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-02-20T00:56:37.187+09:00  INFO 11132 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-02-20T00:56:37.207+09:00  INFO 11132 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-02-20T00:56:40.432+09:00  WARN 11132 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-20T00:56:42.148+09:00  WARN 11132 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2024-02-20T00:56:44.091+09:00  INFO 11132 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Started UserServiceTest in 19.973 seconds (process running for 23.763)
-2024-02-20T00:56:47.189+09:00  WARN 11132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 42001, SQLState: 42001
-2024-02-20T00:56:47.190+09:00 ERROR 11132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Syntax error in SQL statement &quot;select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
+2024-02-20T00:58:03.380+09:00  INFO 9456 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Starting UserServiceTest using Java 17.0.9 with PID 9456 (started by 82104 in C:\Users\82104\OneDrive\바탕 화면\study\spring\project\SongDiary_git)
+2024-02-20T00:58:03.384+09:00  INFO 9456 --- [    Test worker] c.s.S.user.service.UserServiceTest       : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-02-20T00:58:06.259+09:00  INFO 9456 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-02-20T00:58:06.535+09:00  INFO 9456 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 245 ms. Found 1 JPA repository interface.
+2024-02-20T00:58:07.808+09:00  INFO 9456 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-02-20T00:58:08.198+09:00  INFO 9456 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/songdiary user=SA
+2024-02-20T00:58:08.210+09:00  INFO 9456 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-02-20T00:58:08.573+09:00  INFO 9456 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-02-20T00:58:08.870+09:00  INFO 9456 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-02-20T00:58:09.038+09:00  INFO 9456 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-02-20T00:58:09.966+09:00  INFO 9456 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-02-20T00:58:12.091+09:00  INFO 9456 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-02-20T00:58:12.097+09:00  INFO 9456 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-02-20T00:58:13.540+09:00  WARN 9456 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-20T00:58:14.644+09:00  WARN 9456 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-02-20T00:58:15.948+09:00  INFO 9456 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Started UserServiceTest in 13.221 seconds (process running for 16.44)
+2024-02-20T00:58:17.707+09:00  WARN 9456 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 42001, SQLState: 42001
+2024-02-20T00:58:17.708+09:00 ERROR 9456 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Syntax error in SQL statement &quot;select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
 select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=? [42001-224]
 </pre>
 </span>
@@ -342,7 +342,7 @@ select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user 
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at 2024. 2. 20. 오전 12:56:47</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2024. 2. 20. 오전 12:58:18</p>
 </div>
 </div>
 </body>
