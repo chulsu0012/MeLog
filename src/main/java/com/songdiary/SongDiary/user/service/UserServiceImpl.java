@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
   
@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   // 회원가입
-  @Transactional
   public User join(UserJoinRequest req) {
     User user = new User();
 
@@ -68,7 +67,6 @@ public class UserServiceImpl implements UserService {
   
   
   // 회원탈퇴
-  @Transactional
   public void delete(Long userId) {
     Optional<User> user = userRepository.findById(userId);
     if(user.isPresent())
@@ -92,7 +90,6 @@ public class UserServiceImpl implements UserService {
   }
 
   // 회원정보 - 수정
-  @Transactional
   public void editUserInfo(Long userId, UserInfoRequest req) {
     User user = userRepository.findById(userId).get();
 
@@ -104,7 +101,7 @@ public class UserServiceImpl implements UserService {
     
     userRepository.save(user);
   }
-    @Transactional
+
     public void editPassword(Long userId, UserNewPasswordRequest req) {
       User user = userRepository.findById(userId).get();
 
