@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">2.515s</div>
+<div class="counter">3.113s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,8 +76,8 @@
 <a name="회원가입()"></a>
 <h3 class="failures">회원가입()</h3>
 <span class="code">
-<pre>org.springframework.dao.InvalidDataAccessResourceUsageException: could not prepare statement [Syntax error in SQL statement &quot;select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
-select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=? [42001-224]] [select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=?]; SQL [select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=?]
+<pre>org.springframework.dao.InvalidDataAccessResourceUsageException: could not prepare statement [Syntax error in SQL statement &quot;select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
+select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=? [42001-224]] [select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=?]; SQL [select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=?]
 	at app//org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:277)
 	at app//org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:241)
 	at app//org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:550)
@@ -91,9 +91,9 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
 	at app//org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at app//org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:220)
 	at app/jdk.proxy3/jdk.proxy3.$Proxy126.findByUserProfileId(Unknown Source)
-	at app//com.songdiary.SongDiary.user.service.UserServiceImpl.validateId(UserServiceImpl.java:125)
-	at app//com.songdiary.SongDiary.user.service.UserServiceImpl.InputProfileId(UserServiceImpl.java:156)
-	at app//com.songdiary.SongDiary.user.service.UserServiceImpl.join(UserServiceImpl.java:35)
+	at app//com.songdiary.SongDiary.user.service.UserServiceImpl.validateId(UserServiceImpl.java:116)
+	at app//com.songdiary.SongDiary.user.service.UserServiceImpl.InputProfileId(UserServiceImpl.java:147)
+	at app//com.songdiary.SongDiary.user.service.UserServiceImpl.join(UserServiceImpl.java:34)
 	at java.base@17.0.9/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base@17.0.9/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base@17.0.9/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -194,8 +194,8 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
 	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
-Caused by: org.hibernate.exception.SQLGrammarException: could not prepare statement [Syntax error in SQL statement &quot;select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
-select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=? [42001-224]] [select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=?]
+Caused by: org.hibernate.exception.SQLGrammarException: could not prepare statement [Syntax error in SQL statement &quot;select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
+select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=? [42001-224]] [select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=?]
 	at app//org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:66)
 	at app//org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
 	at app//org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
@@ -237,8 +237,8 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
 	at app//org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at app//org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
 	... 110 more
-Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement &quot;select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
-select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=? [42001-224]
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement &quot;select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
+select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=? [42001-224]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	at org.h2.message.DbException.getSyntaxError(DbException.java:261)
@@ -292,7 +292,7 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
 </thead>
 <tr>
 <td class="failures">회원가입()</td>
-<td class="failures">2.515s</td>
+<td class="failures">3.113s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -300,9 +300,9 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>00:34:35.616 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.songdiary.SongDiary.user.service.UserServiceTest]: UserServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-00:34:36.084 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.songdiary.SongDiary.SongDiaryApplication for test class com.songdiary.SongDiary.user.service.UserServiceTest
-00:34:36.958 [Test worker] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+<pre>00:56:22.974 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.songdiary.SongDiary.user.service.UserServiceTest]: UserServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:56:23.441 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.songdiary.SongDiary.SongDiaryApplication for test class com.songdiary.SongDiary.user.service.UserServiceTest
+00:56:24.117 [Test worker] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -312,25 +312,25 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.2)
 
-2024-02-20T00:34:37.949+09:00  INFO 5592 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Starting UserServiceTest using Java 17.0.9 with PID 5592 (started by 82104 in C:\Users\82104\OneDrive\바탕 화면\study\spring\project\SongDiary_git)
-2024-02-20T00:34:37.952+09:00  INFO 5592 --- [    Test worker] c.s.S.user.service.UserServiceTest       : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-02-20T00:34:41.421+09:00  INFO 5592 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-02-20T00:34:41.698+09:00  INFO 5592 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 240 ms. Found 1 JPA repository interface.
-2024-02-20T00:34:43.404+09:00  INFO 5592 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-02-20T00:34:43.737+09:00  INFO 5592 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/songdiary user=SA
-2024-02-20T00:34:43.745+09:00  INFO 5592 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-02-20T00:34:44.128+09:00  INFO 5592 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-02-20T00:34:44.444+09:00  INFO 5592 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
-2024-02-20T00:34:44.631+09:00  INFO 5592 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-02-20T00:34:46.121+09:00  INFO 5592 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-02-20T00:34:53.785+09:00  INFO 5592 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-02-20T00:34:53.797+09:00  INFO 5592 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-02-20T00:34:55.737+09:00  WARN 5592 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-20T00:34:56.862+09:00  WARN 5592 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2024-02-20T00:34:57.738+09:00  INFO 5592 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Started UserServiceTest in 20.802 seconds (process running for 24.85)
-2024-02-20T00:35:00.254+09:00  WARN 5592 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 42001, SQLState: 42001
-2024-02-20T00:35:00.254+09:00 ERROR 5592 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Syntax error in SQL statement &quot;select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
-select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofileid,u1_0.usersex from user u1_0 where u1_0.userprofileid=? [42001-224]
+2024-02-20T00:56:24.907+09:00  INFO 11132 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Starting UserServiceTest using Java 17.0.9 with PID 11132 (started by 82104 in C:\Users\82104\OneDrive\바탕 화면\study\spring\project\SongDiary_git)
+2024-02-20T00:56:24.912+09:00  INFO 11132 --- [    Test worker] c.s.S.user.service.UserServiceTest       : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-02-20T00:56:27.683+09:00  INFO 11132 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-02-20T00:56:27.877+09:00  INFO 11132 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 167 ms. Found 1 JPA repository interface.
+2024-02-20T00:56:29.362+09:00  INFO 11132 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-02-20T00:56:29.738+09:00  INFO 11132 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/songdiary user=SA
+2024-02-20T00:56:29.753+09:00  INFO 11132 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-02-20T00:56:30.205+09:00  INFO 11132 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-02-20T00:56:30.534+09:00  INFO 11132 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-02-20T00:56:30.669+09:00  INFO 11132 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-02-20T00:56:31.735+09:00  INFO 11132 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-02-20T00:56:37.187+09:00  INFO 11132 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-02-20T00:56:37.207+09:00  INFO 11132 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-02-20T00:56:40.432+09:00  WARN 11132 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-20T00:56:42.148+09:00  WARN 11132 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-02-20T00:56:44.091+09:00  INFO 11132 --- [    Test worker] c.s.S.user.service.UserServiceTest       : Started UserServiceTest in 19.973 seconds (process running for 23.763)
+2024-02-20T00:56:47.189+09:00  WARN 11132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 42001, SQLState: 42001
+2024-02-20T00:56:47.190+09:00 ERROR 11132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Syntax error in SQL statement &quot;select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from [*]user u1_0 where u1_0.userprofileid=?&quot;; expected &quot;identifier&quot;; SQL statement:
+select u1_0.userid,u1_0.username,u1_0.userpassword,u1_0.userprofileid from user u1_0 where u1_0.userprofileid=? [42001-224]
 </pre>
 </span>
 </div>
@@ -342,7 +342,7 @@ select u1_0.userid,u1_0.useremail,u1_0.username,u1_0.userpassword,u1_0.userprofi
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at 2024. 2. 20. 오전 12:35:01</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2024. 2. 20. 오전 12:56:47</p>
 </div>
 </div>
 </body>

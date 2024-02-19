@@ -38,10 +38,8 @@ public class UserServiceImpl implements UserService {
     user.setUserProfileId(req.getProfileId());
     String encodedPassword = passwordEncoder.encode(req.getPassword());
     user.setUserPassword(encodedPassword);
-    user.setUserEmail(req.getEmail());
     user.setUserName(req.getName());
-    user.setUserSex(req.getSex());
-    
+
     userRepository.save(user);
     return user;
   }
@@ -82,9 +80,7 @@ public class UserServiceImpl implements UserService {
     
     UserInfoResponse res = new UserInfoResponse();
     res.setProfileId(user.getUserProfileId());
-    res.setEmail(user.getUserEmail());
     res.setName(user.getUserName());
-    res.setSex(user.getUserSex());
 
     return res;
   }
@@ -95,10 +91,8 @@ public class UserServiceImpl implements UserService {
 
     InputName(req.getName());
     
-    user.setUserEmail(req.getEmail());
     user.setUserName(req.getName());
-    user.setUserSex(req.getSex());
-    
+
     userRepository.save(user);
   }
 

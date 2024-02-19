@@ -86,7 +86,6 @@ public class UserServiceTest {
     // when
     UserInfoRequest form = new UserInfoRequest();
     form.setName(user.getUserName());
-    form.setSex(user.getUserSex());
 
     userService.editUserInfo(user.getUserId(), form);
 

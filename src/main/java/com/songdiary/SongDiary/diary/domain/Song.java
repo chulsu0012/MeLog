@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter @Setter
 public class Song {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="SONGID")
     private Long songId;
 

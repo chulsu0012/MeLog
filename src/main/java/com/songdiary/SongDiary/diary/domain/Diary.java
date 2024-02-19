@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name="Diary")
 @Getter @Setter
 public class Diary {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
     private String diaryTitle;
     private LocalDate diaryDate;

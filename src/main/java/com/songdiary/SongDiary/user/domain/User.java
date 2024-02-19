@@ -22,13 +22,9 @@ public class User {
   @Column(name="USERPASSWORD")
   private String userPassword;
 
-  @Column(name="USEREMAIL")
-  private String userEmail;
   
   @Column(name="USERNAME")
   private String userName;
 
-  @Column(name="USERSEX")
-  private String userSex;
 
 }
