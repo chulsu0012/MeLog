@@ -20,7 +20,6 @@ public interface UserService {
   
   public Boolean validateId(String profileId);
   public Boolean validatePassword(String password, String passwordCheck);
-  public Boolean validateEmail(String email);
 
   public Long findUserId(String profileId);
   public List<User> findUsers();

@@ -27,9 +27,7 @@ public class UserServiceTest {
     form.setProfileId("id1");
     form.setPassword("password");
     form.setPasswordCheck("password");
-    form.setEmail("email1");
     form.setName("name");
-    form.setSex("sex");
 
     // when
     userService.join(form);
@@ -71,10 +69,7 @@ public class UserServiceTest {
     User user = userRepository.findByUserProfileId(profileId).get();
     UserInfoResponse rawUser = new UserInfoResponse();
     rawUser.setProfileId(user.getUserProfileId());
-    rawUser.setEmail(user.getUserEmail());
     rawUser.setName(user.getUserName());
-    rawUser.setSex(user.getUserSex());
-
     // when
     UserInfoResponse checkUser = userService.userInfo(user.getUserId());
 
@@ -86,19 +81,16 @@ public class UserServiceTest {
   void 프로필수정() {
     // given
     String profileId = "id1";
-    String email = "newEmail";
     User user = userRepository.findByUserProfileId(profileId).get();
 
     // when
     UserInfoRequest form = new UserInfoRequest();
-    form.setEmail(email);
     form.setName(user.getUserName());
     form.setSex(user.getUserSex());
 
     userService.editUserInfo(user.getUserId(), form);
 
     // then
-    user.setUserEmail(email);
     assertEquals(user, userRepository.findByUserId(user.getUserId()).get());
   }
 

@@ -16,8 +16,10 @@ import com.songdiary.SongDiary.user.dto.UserNewPasswordRequest;
 import com.songdiary.SongDiary.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class UserServiceImpl implements UserService {
   
@@ -26,15 +28,14 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   // 회원가입
+  @Transactional
   public User join(UserJoinRequest req) {
     User user = new User();
 
     InputProfileId(req.getProfileId());
     InputPassword(req.getPassword(), req.getPasswordCheck());
-    InputEmail(req.getEmail(), true);
     InputName(req.getName());
-    InputSex(req.getSex());
-    
+
     user.setUserProfileId(req.getProfileId());
     String encodedPassword = passwordEncoder.encode(req.getPassword());
     user.setUserPassword(encodedPassword);
@@ -67,6 +68,7 @@ public class UserServiceImpl implements UserService {
   
   
   // 회원탈퇴
+  @Transactional
   public void delete(Long userId) {
     Optional<User> user = userRepository.findById(userId);
     if(user.isPresent())
@@ -90,12 +92,11 @@ public class UserServiceImpl implements UserService {
   }
 
   // 회원정보 - 수정
+  @Transactional
   public void editUserInfo(Long userId, UserInfoRequest req) {
     User user = userRepository.findById(userId).get();
 
-    InputEmail(req.getEmail(), false);
     InputName(req.getName());
-    InputSex(req.getSex());
     
     user.setUserEmail(req.getEmail());
     user.setUserName(req.getName());
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UserService {
     
     userRepository.save(user);
   }
-
+    @Transactional
     public void editPassword(Long userId, UserNewPasswordRequest req) {
       User user = userRepository.findById(userId).get();
 
@@ -134,12 +135,6 @@ public class UserServiceImpl implements UserService {
     return false;
   }
   // 사용자 이메일 중복 검사
-  public Boolean validateEmail(String email) {
-    if(userRepository.findByUserEmail(email).isEmpty()) {
-      return true;
-    }
-    return false;
-  }
 
   public Long findUserId(String profileId) {
     User user = userRepository.findByUserProfileId(profileId).get();
@@ -175,14 +170,7 @@ public class UserServiceImpl implements UserService {
     }
   }
   // 사용자 이메일 입력(flag: true = join / flag: false = editInfo)
-  private void InputEmail(String email, Boolean flag) {
-    if(email == null) {
-      throw new IllegalStateException("이메일을 입력하세요.");
-    }
-    if(!validateEmail(email) && flag) {
-      throw new IllegalStateException("이미 사용 중인 이메일입니다.");
-    }
-  }
+
   // 사용자 이름 입력
   private void InputName(String name) {
     if(name == null) {
@@ -190,9 +178,5 @@ public class UserServiceImpl implements UserService {
     }
   }
   // 사용자 성별 입력
-  private void InputSex(String sex) {
-    if(sex == null) {
-      throw new IllegalStateException("성별을 입력해주세요.");
-    }
-  }
+
 }
