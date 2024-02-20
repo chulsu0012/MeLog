@@ -13,6 +13,7 @@ import com.songdiary.SongDiary.diary.repository.DiaryRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

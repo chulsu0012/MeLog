@@ -13,6 +13,7 @@ import com.songdiary.SongDiary.user.dto.UserJoinRequest;
 import com.songdiary.SongDiary.user.dto.UserLoginRequest;
 import com.songdiary.SongDiary.user.dto.UserNewPasswordRequest;
 import com.songdiary.SongDiary.user.repository.UserRepository;
+import org.springframework.test.annotation.Rollback;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -21,6 +22,7 @@ public class UserServiceTest {
   @Autowired UserRepository userRepository;
 
   @Test
+  @Rollback(false)
   void 회원가입() {
     // given
     UserJoinRequest form = new UserJoinRequest();

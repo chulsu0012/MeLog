@@ -15,6 +15,7 @@ import com.songdiary.SongDiary.user.dto.UserNewPasswordRequest;
 import com.songdiary.SongDiary.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
