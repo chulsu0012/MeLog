@@ -49,14 +49,14 @@ public class DiaryController {
   }
 
   @GetMapping("/diary")
-  public String getDiaryByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody FindDiaryByDateRequest req){
+  public String getDiaryByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody FindDiaryByDateRequest req, Model model){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
 
     LocalDate date = (req.getDiaryDate() == null)?LocalDate.now():req.getDiaryDate();
     List<Diary> diaries = diaryService.findDiariesByUserAndDate(user.getUserId(), date);
-
+    model.addAttribute("diaries", diaries);
     return "/diary";
   }
   @GetMapping("/main")
@@ -67,7 +67,7 @@ public class DiaryController {
 
     List<Diary> diaries = diaryService.findDiariesByUser(user.getUserId());
     model.addAttribute("diaries", diaries);
-      return "/main";
+    return "/main";
   }
 
   @DeleteMapping("/diary/{diaryId}/delete")
