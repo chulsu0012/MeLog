@@ -1,5 +1,5 @@
-drop table if exists Diary CASCADE;
-create table Diary(
+drop table if exists AppDiary CASCADE;
+create table AppDiary(
     diaryId bigint not null auto_increment,
     diaryWriterId bigint not null,
     diaryTitle varchar not null,

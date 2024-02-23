@@ -2,7 +2,6 @@ package com.songdiary.SongDiary.user.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import com.songdiary.SongDiary.user.dto.UserNewPasswordRequest;
 import com.songdiary.SongDiary.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

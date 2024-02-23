@@ -1,5 +1,5 @@
-drop table if exists User CASCADE;
-create table User(
+drop table if exists AppUser CASCADE;
+create table AppUser(
     userId bigint not null auto_increment,
     userProfileId varchar not null,
     userPassword varchar not null,
