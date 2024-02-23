@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="Song")
+@Table(name="AppSong")
 public class Song {
 
   @Column(name="SONGID")

@@ -1,5 +1,5 @@
-drop table if exists Song CASCADE;
-create table Song(
+drop table if exists AppSong CASCADE;
+create table AppSong(
     songId bigint not null auto_increment,
     songTitle varchar not null,
     songArtist varchar not null,

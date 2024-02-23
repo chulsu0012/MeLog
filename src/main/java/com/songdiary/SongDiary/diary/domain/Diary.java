@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.songdiary.SongDiary.emotion.domain.Emotion;
 import com.songdiary.SongDiary.song.domain.Song;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="Diary")
+@Table(name="AppDiary")
 public class Diary {
   @Column(name="DIARYID")
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +35,25 @@ public class Diary {
   @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Song> diarySongs = new ArrayList<>();
 
+  @OneToOne(mappedBy = "diary")
+  private Emotion diaryEmotion;
+
   //==연관관계 메서드==//
   public void addDiarySong(Song song){
     diarySongs.add(song);
     song.setDiary(this);
   }
+
+  public void addDiaryEmotion(Emotion e) {
+    diaryEmotion = e;
+    e.setDiary(this);
+  }
+
+  public void removeDiaryEmotion() {
+    if (this.diaryEmotion != null) {
+        this.diaryEmotion.setDiary(null);
+        this.diaryEmotion = null;
+    }
+}
 
 }
