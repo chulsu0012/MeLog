@@ -1,11 +1,7 @@
 package com.songdiary.SongDiary.song.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.songdiary.SongDiary.diary.domain.Diary;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -25,5 +21,9 @@ public class Song {
 
   @Column(name="SONGLIKES")
   private Long songLikes;
+
+  @ManyToOne
+  @JoinColumn(name="diaryId")
+  private Diary diary;
 
 }

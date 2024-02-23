@@ -1,15 +1,13 @@
 package com.songdiary.SongDiary.diary.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.songdiary.SongDiary.song.domain.Song;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
@@ -32,5 +30,14 @@ public class Diary {
 
   @Column(name="DIARYCONTENTS")
   private String diaryContents;
+
+  @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Song> diarySongs = new ArrayList<>();
+
+  //==연관관계 메서드==//
+  public void addDiarySong(Song song){
+    diarySongs.add(song);
+    song.setDiary(this);
+  }
 
 }

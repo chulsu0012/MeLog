@@ -17,11 +17,10 @@ import com.songdiary.SongDiary.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
   
-  @Autowired
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
 

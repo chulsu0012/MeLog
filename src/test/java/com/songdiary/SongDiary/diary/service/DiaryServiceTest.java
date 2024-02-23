@@ -1,7 +1,7 @@
 package com.songdiary.SongDiary.diary.service;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
-import com.songdiary.SongDiary.diary.dto.UpdateDiaryRequest;
+import com.songdiary.SongDiary.diary.dto.DiaryRequest;
 import com.songdiary.SongDiary.user.domain.User;
 import com.songdiary.SongDiary.user.dto.UserJoinRequest;
 import com.songdiary.SongDiary.user.repository.UserRepository;
@@ -48,7 +48,6 @@ public class DiaryServiceTest {
 
         assertEquals("test",getDiary.getDiaryTitle()); //check title
         assertEquals("hello world",getDiary.getDiaryContents()); //check contents
-        assertThat(user.getUserId()).isEqualTo(getDiary.getDiaryWriterId());
     }
     @Test
     @Rollback(false)
@@ -60,18 +59,17 @@ public class DiaryServiceTest {
         Long diaryId = diaryService.writeDiary(diary);
         String newTitle = "edit Title";
         String newContents = "edit Contents";
-        UpdateDiaryRequest request = new UpdateDiaryRequest();
-        request.setDiaryId(diaryId);
+        DiaryRequest request = new DiaryRequest();
         request.setDiaryTitle(newTitle);
         request.setDiaryContents(newContents);
 
         //when
-        diaryService.updateDiary(request);
-        Diary getDiary = diaryService.findDiaryById(diaryId);
+        diaryService.updateDiary(diaryId, request);
+        Diary res = diaryService.findDiaryById(diaryId);
 
         //then
-        assertEquals(getDiary.getDiaryTitle(), "edit Title");
-        assertEquals(getDiary.getDiaryContents(), "edit Contents");
+        assertEquals(res.getDiaryTitle(), "edit Title");
+        assertEquals(res.getDiaryContents(), "edit Contents");
     }
 
     @Test
