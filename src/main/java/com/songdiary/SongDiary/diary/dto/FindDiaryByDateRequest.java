@@ -7,5 +7,5 @@ import lombok.Getter;
 
 @Data
 public class FindDiaryByDateRequest {
-  LocalDate diaryDate;
+  LocalDate date;
 }

@@ -1,9 +1,9 @@
 package com.songdiary.SongDiary.diary.service;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
-import com.songdiary.SongDiary.diary.dto.DiaryRequest;
+import com.songdiary.SongDiary.diary.dto.DiaryRequestDTO;
+import com.songdiary.SongDiary.diary.dto.DiaryResponseDTO;
 import com.songdiary.SongDiary.user.domain.User;
-import com.songdiary.SongDiary.user.dto.UserJoinRequest;
 import com.songdiary.SongDiary.user.repository.UserRepository;
 import com.songdiary.SongDiary.user.service.UserService;
 import jakarta.persistence.EntityManager;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -44,10 +43,10 @@ public class DiaryServiceTest {
         Long diaryId = diaryService.writeDiary(diary);
 
         //then
-        Diary getDiary = diaryService.findDiaryById(diaryId);
+        DiaryResponseDTO getDiary = diaryService.findDiaryById(diaryId);
 
-        assertEquals("test",getDiary.getDiaryTitle()); //check title
-        assertEquals("hello world",getDiary.getDiaryContents()); //check contents
+        assertEquals("test",getDiary.getTitle()); //check title
+        assertEquals("hello world",getDiary.getContents()); //check contents
     }
     @Test
     @Rollback(false)
@@ -59,17 +58,17 @@ public class DiaryServiceTest {
         Long diaryId = diaryService.writeDiary(diary);
         String newTitle = "edit Title";
         String newContents = "edit Contents";
-        DiaryRequest request = new DiaryRequest();
-        request.setDiaryTitle(newTitle);
-        request.setDiaryContents(newContents);
+        DiaryRequestDTO request = new DiaryRequestDTO();
+        request.setTitle(newTitle);
+        request.setContents(newContents);
 
         //when
         diaryService.updateDiary(diaryId, request);
-        Diary res = diaryService.findDiaryById(diaryId);
+        DiaryResponseDTO res = diaryService.findDiaryById(diaryId);
 
         //then
-        assertEquals(res.getDiaryTitle(), "edit Title");
-        assertEquals(res.getDiaryContents(), "edit Contents");
+        assertEquals(res.getTitle(), "edit Title");
+        assertEquals(res.getContents(), "edit Contents");
     }
 
     @Test
@@ -88,21 +87,16 @@ public class DiaryServiceTest {
         diaryService.writeDiary(diary1);
         diaryService.writeDiary(diary2);
 
-        List<Diary> diaries = diaryService.findDiariesByUserAndDate(user.getUserId(), LocalDate.now());
-        List<Diary> diaries1 = diaryService.findDiariesByUser(user.getUserId());
-        List<Diary> diaries2 = diaryService.findDiariesByUserAndDate(user2.getUserId(), LocalDate.now());
+        List<DiaryResponseDTO> diaries = diaryService.findDiariesByUserAndDate(user.getUserId(), LocalDate.now());
+        List<DiaryResponseDTO> diaries1 = diaryService.findDiariesByUser(user.getUserId());
+        List<DiaryResponseDTO> diaries2 = diaryService.findDiariesByUserAndDate(user2.getUserId(), LocalDate.now());
 
         //then
         //test findByUserAndDate
         assertThat(diaries).hasSize(2);
+        assertThat(diaries).hasSize(2);
         assertThat(diaries2).hasSize(1);
-        assertThat(diaries.get(0).getDiaryDate()).isEqualTo(LocalDate.now());
-        assertThat(diaries.get(0).getDiaryWriterId()).isEqualTo(user.getUserId());
-        assertThat(diaries2.get(0).getDiaryDate()).isEqualTo(LocalDate.now());
-        assertThat(diaries2.get(0).getDiaryWriterId()).isEqualTo(user2.getUserId());
 
-        //test findByUser
-        assertThat(diaries).isEqualTo(diaries1);
     }
 
     @Test

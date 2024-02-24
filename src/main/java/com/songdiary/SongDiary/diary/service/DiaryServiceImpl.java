@@ -3,8 +3,10 @@ package com.songdiary.SongDiary.diary.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import com.songdiary.SongDiary.diary.dto.DiaryRequest;
+import com.songdiary.SongDiary.diary.dto.DiaryRequestDTO;
+import com.songdiary.SongDiary.diary.dto.DiaryResponseDTO;
 import org.springframework.stereotype.Service;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
@@ -31,34 +33,41 @@ public class DiaryServiceImpl implements DiaryService {
         diaryRepository.delete(diary);
     }
     @Transactional
-    public void updateDiary(Long diaryId, DiaryRequest req) {
+    public void updateDiary(Long diaryId, DiaryRequestDTO req) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
         optionalDiary.ifPresent(diary -> {
-            diary.setDiaryTitle(req.getDiaryTitle());
-            diary.setDiaryContents(req.getDiaryContents());
+            diary.setDiaryTitle(req.getTitle());
+            diary.setDiaryContents(req.getContents());
         });
     }
 
-    public List<Diary> findAllDiaries(){
-        return diaryRepository.findAll();
+    public List<DiaryResponseDTO> findAllDiaries(){
+        return diaryRepository.findAll().stream()
+                .map(DiaryResponseDTO::from)
+                .collect(Collectors.toList());
     }
 
-    public Diary findDiaryById(Long diaryId) {
-        return diaryRepository.findById(diaryId)
-                .orElseThrow(()->new EntityNotFoundException("다이어리가 존재하지 않습니다."));
+    public DiaryResponseDTO findDiaryById(Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new EntityNotFoundException("다이어리가 존재하지 않습니다."));
+        return DiaryResponseDTO.from(diary);
 
     }
 
-    public List<Diary> findDiariesByUserAndDate(Long diaryWriterId, LocalDate diaryDate) {
+    public List<DiaryResponseDTO> findDiariesByUserAndDate(Long diaryWriterId, LocalDate diaryDate) {
         List<Diary> diaries = diaryRepository.findByDiaryDateAndDiaryWriterId(diaryDate, diaryWriterId);
         if (diaries == null || diaries.isEmpty()) {
             throw new EntityNotFoundException("해당 날짜의 다이어리가 존재하지 않습니다.");
         }
-        return diaries;
+        return diaries.stream()
+                .map(DiaryResponseDTO::from)
+                .collect(Collectors.toList());
     }
 
-    public List<Diary> findDiariesByUser(Long diaryWriterId) {
-       return diaryRepository.findByDiaryWriterId(diaryWriterId);
+    public List<DiaryResponseDTO> findDiariesByUser(Long diaryWriterId) {
+       return diaryRepository.findByDiaryWriterId(diaryWriterId).stream()
+               .map(DiaryResponseDTO::from)
+               .collect(Collectors.toList());
     }
 
 }

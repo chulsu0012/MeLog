@@ -11,7 +11,7 @@ import com.songdiary.SongDiary.song.domain.Song;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
-  Optional<Song> findById(Long songId);
+  Optional<Song> findBySongId(Long songId);
   List<Song> findByDiaryDiaryId(Long diaryId);
   void deleteByDiary(Diary diary);
 }

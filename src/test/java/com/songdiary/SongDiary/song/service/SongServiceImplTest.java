@@ -1,10 +1,10 @@
 package com.songdiary.SongDiary.song.service;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
-import com.songdiary.SongDiary.diary.dto.DiaryRequest;
+import com.songdiary.SongDiary.diary.dto.DiaryResponseDTO;
 import com.songdiary.SongDiary.diary.service.DiaryService;
 import com.songdiary.SongDiary.song.domain.Song;
-import com.songdiary.SongDiary.song.dto.SongRequest;
+import com.songdiary.SongDiary.song.dto.SongDTO;
 import com.songdiary.SongDiary.user.domain.User;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -13,12 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
 class SongServiceImplTest {
@@ -33,13 +32,13 @@ class SongServiceImplTest {
         //given
         User user = createUser();
         Diary diary = createDiary(user);
-        List<SongRequest> reqs = createSongs();
+        List<SongDTO> reqs = createSongs();
 
         //when
         Long diaryId = diaryService.writeDiary(diary);
         songService.createSongs(diaryId, reqs);
-        Diary getDiary = diaryService.findDiaryById(diaryId);
-        List<Song> getSongs = songService.findSongsByDiaryId(diaryId);
+        DiaryResponseDTO getDiary = diaryService.findDiaryById(diaryId);
+        List<SongDTO> getSongs = songService.findSongsByDiaryId(diaryId);
 
         //then
         assertThat(getSongs).hasSize(3);
@@ -54,33 +53,33 @@ class SongServiceImplTest {
         //given
         User user = createUser();
         Diary diary = createDiary(user);
-        List<SongRequest> reqs = createSongs();
+        List<SongDTO> reqs = createSongs();
 
         //when
         Long diaryId = diaryService.writeDiary(diary);
         songService.createSongs(diaryId, reqs);
         songService.deleteSongs(diaryId);
-        Diary getDiary = diaryService.findDiaryById(diaryId);
-        List<Song> getSongs = songService.findSongsByDiaryId(diaryId);
+        DiaryResponseDTO getDiary = diaryService.findDiaryById(diaryId);
+        List<SongDTO> getSongs = songService.findSongsByDiaryId(diaryId);
 
         //then
         assertThat(getSongs).hasSize(0);
 
     }
 
-    private List<SongRequest> createSongs() {
-        List<SongRequest> reqs = new ArrayList<>();
-        SongRequest req = new SongRequest();
+    private List<SongDTO> createSongs() {
+        List<SongDTO> reqs = new ArrayList<>();
+        SongDTO req = new SongDTO();
         req.setSongTitle("title1");
         req.setSongArtist("artist1");
         req.setSongLikes(0L);
 
-        SongRequest req2 = new SongRequest();
+        SongDTO req2 = new SongDTO();
         req2.setSongTitle("title2");
         req2.setSongArtist("artist2");
         req2.setSongLikes(100L);
 
-        SongRequest req3 = new SongRequest();
+        SongDTO req3 = new SongDTO();
         req3.setSongTitle("title3");
         req3.setSongArtist("artist3");
         req3.setSongLikes(5L);

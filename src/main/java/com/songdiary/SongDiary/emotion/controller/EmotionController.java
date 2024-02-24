@@ -65,7 +65,7 @@ public class EmotionController {
     }
     try {
       emotionService.deleteEmotion(diaryId);
-      return new ResponseEntity<>("다이어리 감정이 성공적으로 제거되었습니다.", HttpStatus.CREATED);
+      return new ResponseEntity<>("분석된 감정이 성공적으로 제거되었습니다.", HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
