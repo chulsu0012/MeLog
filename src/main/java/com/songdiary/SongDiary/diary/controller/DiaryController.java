@@ -88,8 +88,7 @@ public class DiaryController {
     }
     try {
       diaryService.deleteDiary(diaryId);
-      List<DiaryResponseDTO> res = diaryService.findDiariesByUser(user.getUserId());
-      return ResponseEntity.ok(res);
+      return new ResponseEntity<>("게시물이 정상적으로 삭제되었습니다.", HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -100,8 +99,7 @@ public class DiaryController {
 
     try {
       diaryService.updateDiary(diaryId, req);
-      DiaryResponseDTO res = diaryService.findDiaryById(diaryId);
-      return ResponseEntity.ok(res);
+      return new ResponseEntity<>("게시물이 정상적으로 수정되었습니다.", HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
