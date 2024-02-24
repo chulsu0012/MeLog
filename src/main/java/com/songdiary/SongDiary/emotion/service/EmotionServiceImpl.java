@@ -20,12 +20,12 @@ public class EmotionServiceImpl implements EmotionService {
   private final DiaryRepository diaryRepository;
 
   public void createEmotion(Long diaryId, EmotionDTO req) {
-    Diary diary = diaryRepository.findByDiaryId(diaryId).get();
-    if(diary == null || diary.getDiaryId() == null) {
+    Optional<Diary> diary = diaryRepository.findByDiaryId(diaryId);
+    if(diary.isEmpty() || diary.get().getDiaryId() == null) {
       throw new IllegalStateException("다이어리 조회에 실패하였습니다.");
     }
     
-    if(diary.getDiaryEmotion() != null) {
+    if(diary.get().getDiaryEmotion() != null) {
       throw new IllegalStateException("다이어리 감정 분석 결과가 이미 완료된 상태입니다.");
     }
 
@@ -38,36 +38,36 @@ public class EmotionServiceImpl implements EmotionService {
     emotion.setFear(req.getFear());
 
     emotionRepository.save(emotion);
-    diary.addDiaryEmotion(emotion);
+    diary.get().addDiaryEmotion(emotion);
 
-    diaryRepository.save(diary);
+    diaryRepository.save(diary.get());
     
   }
 
   @Override
   public void deleteEmotion(Long diaryId) {
-    Diary diary = diaryRepository.findByDiaryId(diaryId).get();
-    if(diary == null || diary.getDiaryId() == null) {
+    Optional<Diary> diary = diaryRepository.findByDiaryId(diaryId);
+    if(diary.isEmpty()) {
       throw new IllegalStateException("다이어리 조회에 실패하였습니다.");
     }
   
-    Emotion emotion = diary.getDiaryEmotion();
+    Emotion emotion = diary.get().getDiaryEmotion();
     if(emotion == null) {
       throw new IllegalStateException("다이어리 감정 분석 결과가 존재하지 않습니다.");
     }
-    diary.setDiaryEmotion(null);
+    diary.get().setDiaryEmotion(null);
     emotionRepository.delete(emotion);
-    diaryRepository.save(diary);
+    diaryRepository.save(diary.get());
 
   }
 
   @Override
   public Optional<EmotionDTO> findEmotionByDiaryId(Long diaryId) {
-    Diary diary = diaryRepository.findByDiaryId(diaryId).get();
-    if(diary == null || diary.getDiaryId() == null) {
+    Optional<Diary> diary = diaryRepository.findByDiaryId(diaryId);
+    if(diary.isEmpty()) {
       throw new IllegalStateException("다이어리 조회에 실패하였습니다.");
     }
-    Emotion emotion = diary.getDiaryEmotion();
+    Emotion emotion = diary.get().getDiaryEmotion();
     if(emotion == null) {
       throw new IllegalStateException("다이어리 감정 분석 결과가 존재하지 않습니다.");
     }

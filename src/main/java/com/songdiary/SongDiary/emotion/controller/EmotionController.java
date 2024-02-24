@@ -36,6 +36,11 @@ public class EmotionController {
       return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
     }
 
+    if (req == null) {
+      return new ResponseEntity<>("분석이 정상적으로 수행되지 않았습니다. 다시 시도해주세요.", HttpStatus.NOT_FOUND);
+    }
+
+
     try {
       emotionService.createEmotion(diaryId, req);
       return new ResponseEntity<>("다이어리 감정 분석이 완료되었습니다.", HttpStatus.CREATED);

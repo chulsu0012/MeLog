@@ -23,25 +23,26 @@ import com.songdiary.SongDiary.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
   
   private final UserService userService;
-
-  @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
 
   // 회원가입
   @PostMapping("join")
   public ResponseEntity<?> userSignUp(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserJoinRequest req) {
     if (user != null) {
       return new ResponseEntity<>("로그인 상태에서는 사용할 수 없는 기능입니다. 로그아웃 후 시도해주세요.", HttpStatus.FORBIDDEN);
+    }
+
+    if (req == null) {
+      return new ResponseEntity<>("입력이 정상적으로 수행되지 않았습니다. 다시 시도해주세요.", HttpStatus.NOT_FOUND);
     }
 
     try {
@@ -57,6 +58,10 @@ public class UserController {
   public ResponseEntity<?> userLogin(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserLoginRequest req, HttpServletRequest sessionReq) {
     if (user != null) {
       return new ResponseEntity<>("로그인 상태에서는 사용할 수 없는 기능입니다. 로그아웃 후 시도해주세요.", HttpStatus.FORBIDDEN);
+    }
+
+    if (req == null) {
+      return new ResponseEntity<>("입력이 정상적으로 수행되지 않았습니다. 다시 시도해주세요.", HttpStatus.NOT_FOUND);
     }
 
     try {
@@ -96,7 +101,7 @@ public class UserController {
         session.invalidate();
       }
       userService.delete(user.getUserId());
-      return new ResponseEntity<>("회원탈퇴가 완료되었습니다.", HttpStatus.OK);
+      return new ResponseEntity<>("회원 탈퇴가 완료되었습니다.", HttpStatus.OK);
     }
     else {
       return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
@@ -118,12 +123,17 @@ public class UserController {
   @PostMapping("info/edit/profile")
   public ResponseEntity<?> userInfoEdit(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserInfoRequest req) {
     if (user.getUserId() != null) {
-      try {
-        userService.editUserInfo(user.getUserId(), req);
-        return new ResponseEntity<>("프로필이 업데이트되었습니다.", HttpStatus.OK);
+      if (req != null) {
+        try {
+          userService.editUserInfo(user.getUserId(), req);
+          return new ResponseEntity<>("프로필이 업데이트되었습니다.", HttpStatus.OK);
+        }
+        catch (Exception e) {
+          return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
       }
-      catch (Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      else {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "입력이 정상적으로 수행되지 않았습니다. 다시 시도해주세요.");
       }
     }
     else {
@@ -135,12 +145,17 @@ public class UserController {
   @PostMapping("info/edit/password")
   public ResponseEntity<?> postMethodName(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody UserNewPasswordRequest req) {
     if (user.getUserId() != null) {
-      try {
-        userService.editPassword(user.getUserId(), req);
-        return new ResponseEntity<>("비밀번호가 변경되었습니다.", HttpStatus.OK);
+      if (req != null) {
+        try {
+          userService.editPassword(user.getUserId(), req);
+          return new ResponseEntity<>("비밀번호가 변경되었습니다.", HttpStatus.OK);
+        }
+        catch (Exception e) {
+          return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
       }
-      catch (Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      else {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "입력이 정상적으로 수행되지 않았습니다. 다시 시도해주세요.");
       }
     }
     else {
