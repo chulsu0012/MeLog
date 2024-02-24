@@ -42,9 +42,9 @@ class SongServiceImplTest {
 
         //then
         assertThat(getSongs).hasSize(3);
-        assertThat(getSongs.get(0).getSongArtist()).isEqualTo("artist1");
-        assertThat(getSongs.get(1).getSongArtist()).isEqualTo("artist2");
-        assertThat(getSongs.get(2).getSongArtist()).isEqualTo("artist3");
+        assertThat(getSongs.get(0).getArtist()).isEqualTo("artist1");
+        assertThat(getSongs.get(1).getArtist()).isEqualTo("artist2");
+        assertThat(getSongs.get(2).getArtist()).isEqualTo("artist3");
     }
 
     @Test
@@ -70,19 +70,19 @@ class SongServiceImplTest {
     private List<SongDTO> createSongs() {
         List<SongDTO> reqs = new ArrayList<>();
         SongDTO req = new SongDTO();
-        req.setSongTitle("title1");
-        req.setSongArtist("artist1");
-        req.setSongLikes(0L);
+        req.setTitle("title1");
+        req.setArtist("artist1");
+        req.setLikes(0L);
 
         SongDTO req2 = new SongDTO();
-        req2.setSongTitle("title2");
-        req2.setSongArtist("artist2");
-        req2.setSongLikes(100L);
+        req2.setTitle("title2");
+        req2.setArtist("artist2");
+        req2.setLikes(100L);
 
         SongDTO req3 = new SongDTO();
-        req3.setSongTitle("title3");
-        req3.setSongArtist("artist3");
-        req3.setSongLikes(5L);
+        req3.setTitle("title3");
+        req3.setArtist("artist3");
+        req3.setLikes(5L);
 
         reqs.add(req);
         reqs.add(req2);

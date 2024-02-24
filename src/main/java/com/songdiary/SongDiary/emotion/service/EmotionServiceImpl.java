@@ -55,7 +55,7 @@ public class EmotionServiceImpl implements EmotionService {
     if(emotion == null) {
       throw new IllegalStateException("다이어리 감정 분석 결과가 존재하지 않습니다.");
     }
-    diary.removeDiaryEmotion();
+    diary.setDiaryEmotion(null);
     emotionRepository.delete(emotion);
     diaryRepository.save(diary);
 

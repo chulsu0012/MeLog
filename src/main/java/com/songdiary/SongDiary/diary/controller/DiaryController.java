@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.songdiary.SongDiary.diary.dto.DiaryResponseDTO;
+import com.songdiary.SongDiary.song.dto.SongDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,6 +16,7 @@ import com.songdiary.SongDiary.diary.dto.DiaryRequestDTO;
 import com.songdiary.SongDiary.diary.dto.FindDiaryByDateRequest;
 import com.songdiary.SongDiary.diary.service.DiaryService;
 import com.songdiary.SongDiary.user.dto.UserSessionDTO;
+import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class DiaryController {
   private final DiaryService diaryService;
 
   @PostMapping("/diary")
-  public DiaryResponseDTO createDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody DiaryRequestDTO req){
+  public ResponseEntity<?> createDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody DiaryRequestDTO req){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
@@ -32,46 +35,75 @@ public class DiaryController {
     diary.setDiaryTitle(req.getTitle());
     diary.setDiaryContents(req.getContents());
 
-    Long diaryId = diaryService.writeDiary(diary);
-    return diaryService.findDiaryById(diaryId);
+    try {
+      diaryService.writeDiary(diary);
+      return new ResponseEntity<>("게시물이 정상적으로 작성되었습니다.", HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
   @GetMapping("/diary")
-  public List<DiaryResponseDTO> getDiaryByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody FindDiaryByDateRequest req){
+  public ResponseEntity<?> getDiaryByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody FindDiaryByDateRequest req){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
 
     LocalDate date = (req.getDate() == null)?LocalDate.now():req.getDate();
-    return diaryService.findDiariesByUserAndDate(user.getUserId(), date);
+    try {
+      List<DiaryResponseDTO> res = diaryService.findDiariesByUserAndDate(user.getUserId(), date);
+      return ResponseEntity.ok(res);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
   @GetMapping("/main")
-  public List<DiaryResponseDTO> getMainDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user){
+  public ResponseEntity<?> getMainDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
-
-    return diaryService.findDiariesByUser(user.getUserId());
+    try {
+      List<DiaryResponseDTO> res = diaryService.findDiariesByUser(user.getUserId());
+      return ResponseEntity.ok(res);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
   @GetMapping("/diary/{diaryId}")
-  public DiaryResponseDTO getDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId){
+  public ResponseEntity<?> getDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
-    return diaryService.findDiaryById(diaryId);
+    try {
+      DiaryResponseDTO res = diaryService.findDiaryById(diaryId);
+      return ResponseEntity.ok(res);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
   @DeleteMapping("/diary/{diaryId}")
-  public List<DiaryResponseDTO> deleteDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId){
+  public ResponseEntity<?> deleteDiary(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
-    diaryService.deleteDiary(diaryId);
-    return diaryService.findDiariesByUser(user.getUserId());
+    try {
+      diaryService.deleteDiary(diaryId);
+      List<DiaryResponseDTO> res = diaryService.findDiariesByUser(user.getUserId());
+      return ResponseEntity.ok(res);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
   @PutMapping("/diary/{diaryId}")
-  public DiaryResponseDTO updateDiary(@PathVariable Long diaryId, @RequestBody DiaryRequestDTO req){
-    diaryService.updateDiary(diaryId, req);
-    return diaryService.findDiaryById(diaryId);
+  public ResponseEntity<?> updateDiary(@PathVariable Long diaryId, @RequestBody DiaryRequestDTO req){
+
+    try {
+      diaryService.updateDiary(diaryId, req);
+      DiaryResponseDTO res = diaryService.findDiaryById(diaryId);
+      return ResponseEntity.ok(res);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 }

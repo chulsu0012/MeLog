@@ -49,11 +49,4 @@ public class Diary {
     e.setDiary(this);
   }
 
-  public void removeDiaryEmotion() {
-    if (this.diaryEmotion != null) {
-        this.diaryEmotion.setDiary(null);
-        this.diaryEmotion = null;
-    }
-}
-
 }
