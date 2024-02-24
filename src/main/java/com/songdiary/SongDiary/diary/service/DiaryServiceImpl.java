@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import com.songdiary.SongDiary.diary.dto.DiaryRequestDTO;
 import com.songdiary.SongDiary.diary.dto.DiaryResponseDTO;
+import com.songdiary.SongDiary.emotion.service.EmotionService;
+import com.songdiary.SongDiary.song.service.SongService;
 import org.springframework.stereotype.Service;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
@@ -21,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DiaryServiceImpl implements DiaryService {
     private final DiaryRepository diaryRepository;
-
+    private final SongService songService;
+    private final EmotionService emotionService;
     @Transactional
     public Long writeDiary(Diary diary){
         diaryRepository.save(diary);
@@ -30,6 +33,8 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional
     public void deleteDiary(Long diaryId){
         Diary diary = diaryRepository.findByDiaryId(diaryId).get();
+        if(diary.getDiarySongs()!=null) songService.deleteSongs(diaryId);
+        if(diary.getDiaryEmotion()!=null) emotionService.deleteEmotion(diaryId);
         diaryRepository.delete(diary);
     }
     @Transactional

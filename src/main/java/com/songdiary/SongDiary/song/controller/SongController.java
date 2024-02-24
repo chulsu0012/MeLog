@@ -16,12 +16,12 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/song")
+@RequestMapping("/{diaryId}/song")
 public class SongController {
     private final SongService songService;
     private final DiaryService diaryService;
 
-    @PostMapping("{diaryId}")
+    @PostMapping()
     public ResponseEntity<?> createSong(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId, @RequestBody List<SongDTO> reqs){
         if (user == null || user.getUserId() == null) {
             return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
@@ -33,7 +33,7 @@ public class SongController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("{diaryId}")
+    @GetMapping()
     public ResponseEntity<?> findEmotion(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId) {
         if (user == null || user.getUserId() == null) {
             return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
@@ -46,7 +46,7 @@ public class SongController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("{diaryId}")
+    @DeleteMapping()
     public ResponseEntity<?> deleteSong(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId) {
         if (user == null || user.getUserId() == null) {
             return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);

@@ -20,7 +20,7 @@ import com.songdiary.SongDiary.user.dto.UserSessionDTO;
 
 
 @RestController
-@RequestMapping("/emotion")
+@RequestMapping("/{diaryId}/emotion")
 public class EmotionController {
 
   private final EmotionService emotionService;
@@ -30,7 +30,7 @@ public class EmotionController {
     this.emotionService = emotionService;
   }
 
-  @PostMapping("{diaryId}")
+  @PostMapping()
   public ResponseEntity<?> createEmotion(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId, @RequestBody EmotionDTO req) {
     if (user == null || user.getUserId() == null) {
       return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
@@ -49,7 +49,7 @@ public class EmotionController {
     }
   }
 
-  @GetMapping("{diaryId}")
+  @GetMapping()
   public ResponseEntity<?> findEmotion(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId) {
     if (user == null || user.getUserId() == null) {
       return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
@@ -63,7 +63,7 @@ public class EmotionController {
     }
   }
 
-  @DeleteMapping("{diaryId}")
+  @DeleteMapping()
   public ResponseEntity<?> deleteEmotion(@SessionAttribute(name="user", required=false) UserSessionDTO user, @PathVariable Long diaryId) {
     if (user == null || user.getUserId() == null) {
       return new ResponseEntity<>("로그인 후 이용해주세요.", HttpStatus.UNAUTHORIZED);
