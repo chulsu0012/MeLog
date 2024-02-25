@@ -19,6 +19,7 @@ import com.songdiary.SongDiary.user.dto.UserSessionDTO;
 import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
+@CrossOrigin(origins="*")
 @RequiredArgsConstructor
 public class DiaryController {
   
