@@ -35,6 +35,7 @@ public class DiaryController {
     diary.setDiaryWriterId(user.getUserId());
     diary.setDiaryTitle(req.getTitle());
     diary.setDiaryContents(req.getContents());
+    diary.setDiaryDate(req.getDate());
 
     try {
       diaryService.writeDiary(diary);

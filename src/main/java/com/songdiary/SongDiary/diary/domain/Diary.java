@@ -26,7 +26,6 @@ public class Diary {
   private String diaryTitle;
 
   @Column(name="DIARYDATE")
-  @CreationTimestamp
   private LocalDate diaryDate;
 
   @Column(name="DIARYCONTENTS")
