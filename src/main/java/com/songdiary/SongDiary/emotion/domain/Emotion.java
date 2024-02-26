@@ -1,8 +1,13 @@
 package com.songdiary.SongDiary.emotion.domain;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
+import com.songdiary.SongDiary.emotion.dto.EmotionDTO;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @Entity
@@ -34,5 +39,18 @@ public class Emotion {
   @OneToOne
   @JoinColumn(name="diaryId")
   private Diary diary;
+
+  //==비지니스 로직==//
+  public String findMostEmotion(EmotionDTO req){
+    Map<String, Long> emotions = new HashMap<>();
+    emotions.put("happiness", req.getHappiness());
+    emotions.put("neutral", req.getNeutral());
+    emotions.put("sadness", req.getSadness());
+    emotions.put("anger", req.getAnger());
+    emotions.put("surprise", req.getSurprise());
+    emotions.put("fear", req.getFear());
+    return Collections.max(emotions.entrySet(), Map.Entry.comparingByValue()).getKey();
+  }
+
 
 }

@@ -3,9 +3,10 @@ package com.songdiary.SongDiary.diary.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.songdiary.SongDiary.diary.dto.DateRequestDTO;
 import com.songdiary.SongDiary.diary.dto.DiaryResponseDTO;
-import com.songdiary.SongDiary.song.dto.SongDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.songdiary.SongDiary.diary.domain.Diary;
 import com.songdiary.SongDiary.diary.dto.DiaryRequestDTO;
-import com.songdiary.SongDiary.diary.dto.FindDiaryByDateRequest;
 import com.songdiary.SongDiary.diary.service.DiaryService;
 import com.songdiary.SongDiary.user.dto.UserSessionDTO;
-import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
 @CrossOrigin(origins="*")
@@ -46,14 +45,28 @@ public class DiaryController {
   }
 
   @GetMapping("/diary")
-  public ResponseEntity<?> getDiaryByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestBody FindDiaryByDateRequest req){
+  public ResponseEntity<?> getDiaryByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestParam(name="date", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
     if (user == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
     }
 
-    LocalDate date = (req.getDate() == null)?LocalDate.now():req.getDate();
+    LocalDate diaryDate = (date == null)?LocalDate.now():date;
     try {
-      List<DiaryResponseDTO> res = diaryService.findDiariesByUserAndDate(user.getUserId(), date);
+      List<DiaryResponseDTO> res = diaryService.findDiariesByUserAndDate(user.getUserId(), diaryDate);
+      return ResponseEntity.ok(res);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+  }
+  @GetMapping("/diary/emotion")
+  public ResponseEntity<?> getEmotionByDate(@SessionAttribute(name="user", required=false) UserSessionDTO user, @RequestParam(name="date", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+    if (user == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.");
+    }
+
+    LocalDate diaryDate = (date == null)?LocalDate.now():date;
+    try {
+      String res = diaryService.findEmotionByDate(user.getUserId(), diaryDate);
       return ResponseEntity.ok(res);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

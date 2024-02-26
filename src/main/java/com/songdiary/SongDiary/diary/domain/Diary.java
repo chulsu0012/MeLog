@@ -37,6 +37,9 @@ public class Diary {
   @OneToOne(mappedBy = "diary")
   private Emotion diaryEmotion;
 
+  @Column(name="MOSTEMOTION")
+  private String mostEmotion;
+
   //==연관관계 메서드==//
   public void addDiarySong(Song song){
     diarySongs.add(song);

@@ -34,7 +34,10 @@ public class DiaryServiceImpl implements DiaryService {
     public void deleteDiary(Long diaryId){
         Diary diary = diaryRepository.findByDiaryId(diaryId).get();
         if(diary.getDiarySongs()!=null) songService.deleteSongs(diaryId);
-        if(diary.getDiaryEmotion()!=null) emotionService.deleteEmotion(diaryId);
+        if(diary.getDiaryEmotion()!=null) {
+            emotionService.deleteEmotion(diaryId);
+            diary.setMostEmotion(null);
+        }
         diaryRepository.delete(diary);
     }
     @Transactional
@@ -73,6 +76,15 @@ public class DiaryServiceImpl implements DiaryService {
        return diaryRepository.findByDiaryWriterId(diaryWriterId).stream()
                .map(DiaryResponseDTO::from)
                .collect(Collectors.toList());
+    }
+
+    public String findEmotionByDate(Long diaryWriterId, LocalDate diaryDate){
+        List<Diary> diaries = diaryRepository.findByDiaryDateAndDiaryWriterId(diaryDate, diaryWriterId);
+        if (diaries == null || diaries.isEmpty()) {
+            throw new EntityNotFoundException("해당 날짜의 다이어리가 존재하지 않습니다.");
+        }
+        Diary diary = diaries.get(0);
+        return diary.getMostEmotion();
     }
 
 }

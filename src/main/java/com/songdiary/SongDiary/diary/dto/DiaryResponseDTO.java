@@ -27,6 +27,7 @@ public class DiaryResponseDTO {
     private String contents;
     private List<SongDTO> songs;
     private EmotionDTO emotion;
+    private String mostEmotion;
 
     public static DiaryResponseDTO from(Diary entity){
         List<SongDTO> songDTOs = new ArrayList<>();
@@ -57,6 +58,7 @@ public class DiaryResponseDTO {
                 .contents(entity.getDiaryContents())
                 .songs(songDTOs)
                 .emotion(emotionDTO)
+                .mostEmotion(entity.getMostEmotion())
                 .build();
     }
 }

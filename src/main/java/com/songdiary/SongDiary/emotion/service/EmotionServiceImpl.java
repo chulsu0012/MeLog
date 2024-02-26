@@ -39,7 +39,7 @@ public class EmotionServiceImpl implements EmotionService {
 
     emotionRepository.save(emotion);
     diary.get().addDiaryEmotion(emotion);
-
+    diary.get().setMostEmotion(emotion.findMostEmotion(req));
     diaryRepository.save(diary.get());
     
   }
@@ -56,6 +56,7 @@ public class EmotionServiceImpl implements EmotionService {
       throw new IllegalStateException("다이어리 감정 분석 결과가 존재하지 않습니다.");
     }
     diary.get().setDiaryEmotion(null);
+    diary.get().setMostEmotion(null);
     emotionRepository.delete(emotion);
     diaryRepository.save(diary.get());
 
@@ -79,7 +80,6 @@ public class EmotionServiceImpl implements EmotionService {
     res.setAnger(emotion.getAnger());
     res.setSurprise(emotion.getSurprise());
     res.setFear(emotion.getFear());
-
     return Optional.of(res);
 
   }

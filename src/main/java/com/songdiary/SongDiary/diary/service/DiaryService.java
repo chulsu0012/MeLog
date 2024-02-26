@@ -15,4 +15,5 @@ public interface DiaryService {
     DiaryResponseDTO findDiaryById(Long diaryId);
     List<DiaryResponseDTO> findDiariesByUserAndDate(Long userId, LocalDate diaryDate);
     List<DiaryResponseDTO> findDiariesByUser(Long userId);
+    String findEmotionByDate(Long userId, LocalDate diaryDate);
 }
